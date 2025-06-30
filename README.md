@@ -79,7 +79,7 @@ bash
 Copy
 Edit
 python app.py
-Open your browser and visit http://localhost:5000/
+Open your browser and visit http://127.0.0.1:5000/
 
 🛠 Technologies Used
 Backend: Python, Flask
