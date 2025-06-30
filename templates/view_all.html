@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View All Catalogues</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+    <h1>All Catalogues</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Catalogue Name</th>
+                <th>Description</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody id="catalogueTableBody">
+            <!-- Populated by JS -->
+        </tbody>
+    </table>
+
+    <script>
+        window.onload = function () {
+            fetch("/catalogues")
+                .then(res => res.json())
+                .then(data => {
+                    const tableBody = document.getElementById("catalogueTableBody");
+                    tableBody.innerHTML = "";
+                    data.forEach(item => {
+                        const row = `<tr>
+                            <td>${item.catalogue_id}</td>
+                            <td>${item.catalogue_name}</td>
+                            <td>${item.catalogue_description}</td>
+                            <td>${item.start_date}</td>
+                            <td>${item.end_date}</td>
+                        </tr>`;
+                        tableBody.innerHTML += row;
+                    });
+                })
+                .catch(error => {
+                    document.getElementById("catalogueTableBody").innerHTML =
+                        `<tr><td colspan="5">Error fetching data: ${error}</td></tr>`;
+                });
+        };
+    </script>
+</body>
+</html>
