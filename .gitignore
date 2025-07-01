@@ -26,10 +26,5 @@ Desktop.ini
 *.db
 *.sqlite3
 
-# Ignore main.py (if you're removing it from GitHub)
-main.py
-
-# Compiled HTML artifacts (optional)
-*.html~
 
 
