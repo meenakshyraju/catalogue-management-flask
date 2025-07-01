@@ -90,7 +90,7 @@ Database: MySQL
 
 Version Control: Git & GitHub
 
-Author
+Author:
 Meenakshy Raju
 
  Notes
