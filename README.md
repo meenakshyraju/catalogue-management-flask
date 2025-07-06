@@ -54,55 +54,54 @@ Version Control: Git & GitHub
 
 ├── schema.sql
 
-│
 ├── config
-│   └── db-connection.ini
+    └── db-connection.ini
 
-│
+
 ├── database
-│   └── (contains schema.sql)
+    └── (contains schema.sql)
 
-│
+
 ├── dto
-│   ├── __init__.py
-│   └── catalogue.py
+    ├── __init__.py
+    └── catalogue.py
 
-│
+
 ├── exception
-│   ├── __init__.py
-│   └── catalogue_custom_exceptions.py
+    ├── __init__.py
+    └── catalogue_custom_exceptions.py
 
-│
+
 ├── logs
-│   └── (auto-generated app.log)
+    └── (auto-generated app.log)
 
-│
+
 ├── service
-│   ├── __init__.py
-│   ├── catalogue_service.py
-│   └── user_service.py
+    ├── __init__.py
+    ├── catalogue_service.py
+    └── user_service.py
 
-│
+
 ├── static
-│   ├── css/
-│   │   └── style.css
-│   └── js/
-│       └── script.js
+  ├── css/
+  │   └── style.css
+  └── js/
+       └── script.js
 
-│
+
 ├── templates
-│   ├── create.html
-│   ├── delete.html
-│   ├── index.html
-│   ├── login.html
-│   ├── update.html
-│   └── view_all.html
+    ├── create.html
+    ├── delete.html
+    ├── index.html
+    ├── login.html
+    ├── update.html
+    └── view_all.html
 
-│
+
 ├── test
-│   └── test_app.py
+    └── test_app.py
 
-│
+
 └── util
     ├── __init__.py
     ├── db_connection_util.py
