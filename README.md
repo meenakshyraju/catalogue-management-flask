@@ -149,7 +149,9 @@ database = cataloguedb
 Use the following test login to access the application:
 
 Username: admin
+
 Password: admin123
+
 (Stored in Users table of your MySQL database.)
 
 ▶Run the Application
