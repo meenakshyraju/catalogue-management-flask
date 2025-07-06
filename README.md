@@ -108,7 +108,7 @@ Version Control: Git & GitHub
 ## 🛠 Setup Instructions
 Clone the Repository:
 
-git clone https://github.com/your-username/catalogue-management-flask.git
+git clone https://github.com/meenakshyraju/catalogue-management-flask.git
 cd catalogue-management-flask
 
  Create a Virtual Environment (optional)
