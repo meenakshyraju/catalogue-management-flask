@@ -5,16 +5,27 @@ Ideal for managing product or service catalogues in small to mid-scale applicati
 
  ## Features:
 -Create a catalogue (Name, Description, Start & End Date)
+
 -View all catalogues with pagination & filtering
+
 -Update existing catalogue info
+
 -Delete catalogue by ID
+
 -Secure login page with test user credentials
+
 -Search & Filter catalogues by ID
+
 -Backend validation and error handling
+
 -RESTful API structure tested via Postman
+
 -Unit tested using PyTest
+
 -Swagger API Documentation
+
 -Application-level logging with rotating log file
+
 
 ## Technologies Used:
 Backend: Python, Flask
