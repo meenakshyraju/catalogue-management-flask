@@ -46,37 +46,48 @@ Version Control: Git & GitHub
 
 📁 catalogue-management-flask
 ├── app.py
+
 ├── requirements.txt
+
 ├── README.md
+
 ├── schema.sql
+
 │
 ├── config
 │   └── db-connection.ini
+
 │
 ├── database
 │   └── (contains schema.sql)
+
 │
 ├── dto
 │   ├── __init__.py
 │   └── catalogue.py
+
 │
 ├── exception
 │   ├── __init__.py
 │   └── catalogue_custom_exceptions.py
+
 │
 ├── logs
 │   └── (auto-generated app.log)
+
 │
 ├── service
 │   ├── __init__.py
 │   ├── catalogue_service.py
 │   └── user_service.py
+
 │
 ├── static
 │   ├── css/
 │   │   └── style.css
 │   └── js/
 │       └── script.js
+
 │
 ├── templates
 │   ├── create.html
@@ -85,14 +96,17 @@ Version Control: Git & GitHub
 │   ├── login.html
 │   ├── update.html
 │   └── view_all.html
+
 │
 ├── test
 │   └── test_app.py
+
 │
 └── util
     ├── __init__.py
     ├── db_connection_util.py
     └── validators.py
+    
 
 
 
