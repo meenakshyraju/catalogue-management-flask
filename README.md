@@ -135,6 +135,7 @@ source schema.sql;
 Update config/db-connection.ini with your DB credentials:
 
 [mysql]
+
 host = localhost
 
 user = root
