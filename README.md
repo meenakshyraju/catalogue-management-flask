@@ -45,6 +45,7 @@ Version Control: Git & GitHub
 ## 📁 Project Structure
 
 📁 catalogue-management-flask
+
 ├── app.py
 
 ├── requirements.txt
