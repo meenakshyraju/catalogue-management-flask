@@ -119,24 +119,30 @@ cd catalogue-management-flask
  Create a Virtual Environment (optional)
 python -m venv venv
 venv\Scripts\activate    # for Windows
-# or
+ or
 source venv/bin/activate # for Mac/Linux
 
-Install Dependencies:
+## Install Dependencies:
 pip install -r requirements.txt
 
-Configure the Database:
+## Configure the Database:
 Create a MySQL database named: cataloguedb
 
 Run the SQL script:
+
 source schema.sql;
+
 Update config/db-connection.ini with your DB credentials:
 
 [mysql]
 host = localhost
+
 user = root
+
 password = yourpassword
+
 database = cataloguedb
+
 
  ## Login Credentials:
 Use the following test login to access the application:
