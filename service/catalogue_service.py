@@ -1,6 +1,6 @@
 # catalogue_service.py
 
-import mysql.connector
+import mysql.connector 
 from dto.catalogue import Catalogue
 from util.db_connection_util import get_db_connection
 from exception.catalogue_custom_exceptions import (
@@ -152,3 +152,58 @@ class CatalogueService:
             if connection and connection.is_connected():
                 connection.close()
 
+    # ---------------- NEW: Filter + Pagination ---------------- #
+
+    def get_filtered_paginated_catalogues(self, filter_name=None, page=1, limit=10):
+        connection = None
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+
+            offset = (page - 1) * limit
+
+            base_query = """
+                SELECT catalogue_id, catalogue_name, catalogue_description, start_date, end_date
+                FROM Catalogue
+            """
+
+            count_query = "SELECT COUNT(*) FROM Catalogue"
+
+            params = []
+            if filter_name:
+                base_query += " WHERE catalogue_name LIKE %s"
+                count_query += " WHERE catalogue_name LIKE %s"
+                params.append(f"%{filter_name}%")
+
+            base_query += " LIMIT %s OFFSET %s"
+            params.extend([limit, offset])
+
+            cursor.execute(base_query, tuple(params))
+            rows = cursor.fetchall()
+
+            cursor.execute(count_query, tuple(params[:1]) if filter_name else ())
+            total = cursor.fetchone()[0]
+
+            catalogues = []
+            for row in rows:
+                catalogues.append({
+                    "catalogue_id": row[0],
+                    "catalogue_name": row[1],
+                    "catalogue_description": row[2],
+                    "start_date": row[3].strftime("%Y-%m-%d") if row[3] else None,
+                    "end_date": row[4].strftime("%Y-%m-%d") if row[4] else None
+                })
+
+            return {
+                "total": total,
+                "page": page,
+                "limit": limit,
+                "data": catalogues
+            }
+
+        except Exception as e:
+            raise CatalogueException(f"Error filtering/paginating catalogues: {e}")
+
+        finally:
+            if connection and connection.is_connected():
+                connection.close()

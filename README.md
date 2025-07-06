@@ -5,6 +5,7 @@ Ideal for managing product or service catalogues in small to mid-scale applicati
 
  ## Features:
 -Create a catalogue (Name, Description, Start & End Date)
+ 
 
 -View all catalogues with pagination & filtering
 
@@ -45,6 +46,7 @@ Version Control: Git & GitHub
 ## 📁 Project Structure
 
 📁 catalogue-management-flask
+ 
 
 ├── app.py
 
@@ -102,11 +104,57 @@ Version Control: Git & GitHub
     └── test_app.py
 
 
+
+├── app.py
+├── requirements.txt
+├── README.md
+├── schema.sql
+│
+├── config
+│   └── db-connection.ini
+│
+├── database
+│   └── (contains schema.sql)
+│
+├── dto
+│   ├── __init__.py
+│   └── catalogue.py
+│
+├── exception
+│   ├── __init__.py
+│   └── catalogue_custom_exceptions.py
+│
+├── logs
+│   └── (auto-generated app.log)
+│
+├── service
+│   ├── __init__.py
+│   ├── catalogue_service.py
+│   └── user_service.py
+│
+├── static
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── script.js
+│
+├── templates
+│   ├── create.html
+│   ├── delete.html
+│   ├── index.html
+│   ├── login.html
+│   ├── update.html
+│   └── view_all.html
+│
+├── test
+│   └── test_app.py
+│
+6993cde (Initial complete project commit with Flask, MySQL, UI, Swagger, Logging)
 └── util
     ├── __init__.py
     ├── db_connection_util.py
     └── validators.py
-    
+ 
 
 
 
@@ -119,6 +167,7 @@ cd catalogue-management-flask
  Create a Virtual Environment (optional)
 python -m venv venv
 venv\Scripts\activate    # for Windows
+ 
  or
 source venv/bin/activate # for Mac/Linux
 
@@ -145,13 +194,37 @@ password = yourpassword
 database = cataloguedb
 
 
+
+or
+source venv/bin/activate # for Mac/Linux
+
+Install Dependencies:
+pip install -r requirements.txt
+
+Configure the Database:
+Create a MySQL database named: cataloguedb
+
+Run the SQL script:
+source schema.sql;
+Update config/db-connection.ini with your DB credentials:
+
+[mysql]
+host = localhost
+user = root
+password = yourpassword
+database = cataloguedb
+
+ 
  ## Login Credentials:
 Use the following test login to access the application:
 
 Username: admin
 
+
 Password: admin123
 
+
+Password: admin123 
 (Stored in Users table of your MySQL database.)
 
 ▶Run the Application
@@ -172,9 +245,10 @@ The app uses server-side validation, logging, and structured exception handling.
 
 No third-party frontend frameworks used—pure HTML/CSS/JS.
 
-Author
+Author:
 Meenakshy Raju
 
+ 
 
 
 
@@ -206,6 +280,8 @@ Meenakshy Raju
 
 
 
+
+ 6993cde (Initial complete project commit with Flask, MySQL, UI, Swagger, Logging)
 
 
 

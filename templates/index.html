@@ -4,14 +4,93 @@
     <meta charset="UTF-8">
     <title>Catalogue Management</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .button-container {
+            text-align: center;
+            margin: 20px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Catalogue Management System</h1>
+    <h1 style="text-align:center;">Catalogue Management System</h1>
+
     <div class="button-container">
         <a href="/create"><button>Create Catalogue</button></a>
         <a href="/view"><button>View All Catalogues</button></a>
         <a href="/update"><button>Update Catalogue</button></a>
         <a href="/delete"><button>Delete Catalogue</button></a>
     </div>
+
+    <div id="catalogue-container">
+        <h2 style="text-align:center;">All Catalogues</h2>
+        <table id="catalogue-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        window.onload = function () {
+            // ✅ Updated URL to fetch a large number of catalogues (limit=1000)
+            fetch("/catalogues?page=1&limit=1000")
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.querySelector("#catalogue-table tbody");
+                    tbody.innerHTML = "";
+
+                    if (data.status === "success" && data.data.length > 0) {
+                        data.data.forEach(catalogue => {
+                            const row = document.createElement("tr");
+                            row.innerHTML = `
+                                <td>${catalogue.catalogue_id}</td>
+                                <td>${catalogue.catalogue_name}</td>
+                                <td>${catalogue.catalogue_description}</td>
+                                <td>${catalogue.start_date}</td>
+                                <td>${catalogue.end_date}</td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    } else {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `<td colspan="5">No catalogues found.</td>`;
+                        tbody.appendChild(row);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching catalogues:", error);
+                    const tbody = document.querySelector("#catalogue-table tbody");
+                    const row = document.createElement("tr");
+                    row.innerHTML = `<td colspan="5">Error loading catalogues</td>`;
+                    tbody.appendChild(row);
+                });
+        };
+    </script>
 </body>
 </html>

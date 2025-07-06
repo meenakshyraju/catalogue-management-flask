@@ -1,53 +1,147 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>View All Catalogues</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
-</head>
-<body>
-    <h1>All Catalogues</h1>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Catalogue Name</th>
-                <th>Description</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-            </tr>
-        </thead>
-        <tbody id="catalogueTableBody">
-            <!-- Populated by JS -->
-        </tbody>
-    </table>
-
-    <script>
-        window.onload = function () {
-            fetch("/catalogues")
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script defer>
+        // ------------- Fetch All Catalogues with Pagination ------------- //
+        function fetchAllCatalogues(page = 1, limit = 5) {
+            fetch(`/catalogues?page=${page}&limit=${limit}`)
                 .then(res => res.json())
                 .then(data => {
-                    const tableBody = document.getElementById("catalogueTableBody");
-                    tableBody.innerHTML = "";
-                    data.forEach(item => {
-                        const row = `<tr>
-                            <td>${item.catalogue_id}</td>
-                            <td>${item.catalogue_name}</td>
-                            <td>${item.catalogue_description}</td>
-                            <td>${item.start_date}</td>
-                            <td>${item.end_date}</td>
-                        </tr>`;
-                        tableBody.innerHTML += row;
+                    const tableDiv = document.getElementById("catalogueTable");
+                    const paginationDiv = document.getElementById("paginationContainer");
+
+                    if (!Array.isArray(data.data) || data.data.length === 0) {
+                        tableDiv.innerHTML = "<p>No catalogues found.</p>";
+                        paginationDiv.innerHTML = "";
+                        return;
+                    }
+
+                    let html = `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+                    data.data.forEach(cat => {
+                        html += `
+                            <tr>
+                                <td>${cat.catalogue_id}</td>
+                                <td>${cat.catalogue_name}</td>
+                                <td>${cat.catalogue_description}</td>
+                                <td>${cat.start_date}</td>
+                                <td>${cat.end_date}</td>
+                            </tr>
+                        `;
                     });
+                    html += "</tbody></table>";
+                    tableDiv.innerHTML = html;
+
+                    // Pagination buttons
+                    const total = data.total || 0;
+                    const totalPages = Math.ceil(total / limit);
+                    let paginationHtml = "";
+
+                    for (let i = 1; i <= totalPages; i++) {
+                        paginationHtml += `<button onclick="fetchAllCatalogues(${i}, ${limit})">${i}</button> `;
+                    }
+
+                    paginationDiv.innerHTML = paginationHtml;
                 })
-                .catch(error => {
-                    document.getElementById("catalogueTableBody").innerHTML =
-                        `<tr><td colspan="5">Error fetching data: ${error}</td></tr>`;
+                .catch(err => {
+                    document.getElementById("catalogueTable").innerHTML = "<p>Error fetching data</p>";
+                    console.error(err);
                 });
-        };
+        }
+
+        // ------------- Search by Catalogue ID ------------- //
+        function searchById() {
+            const id = document.getElementById("searchInput").value.trim();
+            if (!id || isNaN(id)) {
+                alert("Please enter a valid numeric Catalogue ID.");
+                return;
+            }
+
+            fetch(`/catalogues/${id}`)
+                .then(res => res.json())
+                .then(data => {
+                    const tableDiv = document.getElementById("catalogueTable");
+                    const paginationDiv = document.getElementById("paginationContainer");
+
+                    if (!data || !data.data) {
+                        tableDiv.innerHTML = "<p>No catalogue found with that ID.</p>";
+                        paginationDiv.innerHTML = "";
+                        return;
+                    }
+
+                    const cat = data.data;
+                    let html = `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>${cat.catalogue_id}</td>
+                                    <td>${cat.catalogue_name}</td>
+                                    <td>${cat.catalogue_description}</td>
+                                    <td>${cat.start_date}</td>
+                                    <td>${cat.end_date}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    `;
+                    tableDiv.innerHTML = html;
+                    paginationDiv.innerHTML = ""; // Hide pagination when search is active
+                })
+                .catch(err => {
+                    document.getElementById("catalogueTable").innerHTML = "<p>Error fetching data</p>";
+                    console.error(err);
+                });
+        }
+
+        // Run fetchAllCatalogues by default when page loads
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchAllCatalogues();
+        });
     </script>
+</head>
+<body>
+    <header>
+        <h1>All Catalogues</h1>
+    </header>
+
+    <main>
+        <!-- Search by ID input + button -->
+        <div class="filter-container">
+            <input type="number" id="searchInput" placeholder="Enter Catalogue ID" />
+            <button onclick="searchById()">Search</button>
+        </div>
+
+        <!-- Dynamic table -->
+        <div id="catalogueTable"></div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="paginationContainer"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Catalogue Management System</p>
+    </footer>
 </body>
 </html>

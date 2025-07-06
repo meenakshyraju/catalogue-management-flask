@@ -1,30 +1,32 @@
-# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+app_copy.py
 
-# Environment files
-.env
+# Virtual environment
 .venv/
 venv/
 ENV/
 env.bak/
 env/
 
+# Byte-compiled / optimized / DLL files
+# (no need to add comment in middle of line)
+# Add if needed
+
 # VS Code settings
 .vscode/
 
-# Windows files
+# Windows system files
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 
 # Git metadata
-*.log
+logs/app.log
 
-# SQLite database files (optional – only if you don't want to track them)
+# SQLite database (optional – keep only if you want to exclude DB)
 *.db
 *.sqlite3
-
 
 
